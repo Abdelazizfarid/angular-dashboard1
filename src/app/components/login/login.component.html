@@ -1,0 +1,42 @@
+<div class="login">
+  <div class="container">
+    <div class="head">
+      <h2>Login to your account</h2>
+      <p>Welcome back! Please enter your details.</p>
+    </div>
+    <div class="login-form">
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <div class="form-control">
+          <label>User Name</label>
+          <input type="text" placeholder="Enter You Name" name="username" formControlName="username" autocomplete="off">
+          <span class="err-msg"
+            *ngIf="LoginFormControls.username?.errors?.required && LoginFormControls.username?.touched">
+            User Name field is required
+          </span>
+          <span class="err-msg"
+            *ngIf="LoginFormControls.username?.errors?.minlength && LoginFormControls.username?.touched">
+            please write correct username!
+          </span>
+
+        </div>
+        <div class="form-control">
+          <label>Password</label>
+          <input type="password" name="password" formControlName="password" autocomplete="off">
+          <span class="err-msg"
+            *ngIf="LoginFormControls.password?.errors?.required && LoginFormControls.password?.touched">
+            Password field is required
+          </span>
+          <span class="err-msg"
+            *ngIf="LoginFormControls.password?.errors?.maxlength && LoginFormControls.password?.touched">
+            Password must be less than 32 letter
+          </span>
+          <span class="err-msg"
+            *ngIf="LoginFormControls.password?.errors?.minlength && LoginFormControls.password?.touched">
+            Password must be more than 4 letter
+          </span>
+        </div>
+        <button type="submit" class="submit-btn">{{logging?'Signing in...':'Sign In'}}</button>
+      </form>
+    </div>
+  </div>
+</div>

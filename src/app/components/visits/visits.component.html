@@ -1,0 +1,176 @@
+<div class="visits  py-4">
+  <div class="container-fluid position-relative" style="z-index: 2;">
+    <div class="head d-flex align-items-center justify-content-between">
+      <h2>visits</h2>
+      <button class="btn btn-success" (click)="open(addVisitModal);this.getLocation()">Add Visit</button>
+    </div>
+    <hr>
+    <div class="currentAdded">
+      <ng-container *ngIf=" currentAdded?.length">
+        <div class="btns text-end mb-2">
+          <button type="button" class="btn btn-primary" (click)="exportElmToExcel()">
+            Export
+          </button>
+        </div>
+        <div class="table-box position-relative">
+          <table class="table table-striped  table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Image</th>
+                <th scope="col" style="max-width: 200px;">Address</th>
+                <th scope="col">Date </th>
+                <th scope="col">Time</th>
+                <th scope="col">Description</th>
+                <th scope="col">Customer Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let item of  currentAdded; let i = index">
+
+                <tr>
+                  <th scope="row">{{ i + 1 }}</th>
+                  <th (click)="open(imgModal, item)">
+                    <img src="{{ item?.image}}" alt="image" class="img-fluid" style="
+                    width: 120px;
+                    height: 120px;
+                    object-fit: fill;" />
+                  </th>
+                  <td style="max-width: 200px;">{{item?.adress ?item?.adress: '----'}}</td>
+                  <td>{{item?.date ?(item?.date | date:'dd-MM-YYYY'): '----'}}</td>
+                  <td>{{item?.time ?item?.time: '----'}}</td>
+                  <td>{{item?.visit_description ?item?.visit_description: '----'}}</td>
+                  <td>{{item?.customer_name ?item?.customer_name: '----'}}</td>
+                </tr>
+              </ng-container>
+
+              <tr *ngIf="!currentAdded?.length">
+                <td colspan="18" style="text-align: center">No visits found</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<ng-template #addVisitModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Add Visit </h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form #form="ngForm">
+      <div class="form-group">
+        <svg xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+          <path
+            d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" />
+        </svg>
+        <input type="text" name="customer_name" class="form-control" placeholder="Cusomer Name" ngModel required>
+      </div>
+      <div class="form-group">
+        <svg xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+          <path
+            d="M0 64C0 28.7 28.7 0 64 0H224V128c0 17.7 14.3 32 32 32H384V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V64zm384 64H256V0L384 128z" />
+        </svg>
+        <textarea style="min-height: 120px;resize: none;" name="visit_description" class="form-control"
+          placeholder="Visit Description" ngModel required></textarea>
+      </div>
+
+      <!-- <div class="container-upload">
+        <div class="upload-box position-relative">
+          <div class="content position-relative">
+            <div class="upload-icon">
+              <img class=""
+                src="https://res.cloudinary.com/www-santhoshthomas-xyz/image/upload/v1620293451/RapTor/folder_1_ipacc2.png"
+                alt="">
+            </div>
+
+            <h5 class="text">Drag and Drop Your Files Here</h5>
+            <p>Or</p>
+
+            <div class="upload-btn-wrapper">
+              <button class="btn" [disabled]="startUpload">
+                <span *ngIf="!startUpload">Upload</span>
+                <span *ngIf="startUpload">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path
+                      d="M304 48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zm0 416a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM48 304a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm464-48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM142.9 437A48 48 0 1 0 75 369.1 48 48 0 1 0 142.9 437zm0-294.2A48 48 0 1 0 75 75a48 48 0 1 0 67.9 67.9zM369.1 437A48 48 0 1 0 437 369.1 48 48 0 1 0 369.1 437z" />
+                  </svg>
+                </span>
+              </button>
+            </div>
+          </div>
+
+          <input id="fileUpload" type="file" #upload (input)="uploadFile(upload)" [disabled]="startUpload">
+
+        </div>
+        <div class="preview-box" *ngIf="uploadedImage" style="    max-width: 300px;
+        height: 200px;
+        overflow: hidden;
+        border-radius: 5px;
+        box-shadow: 0px 0px 1px 1px #001828;display: flex; align-items: center;justify-content: center;">
+          <img src="{{uploadedImage}}" alt="img" class="img-fluid" style="width: 98%;height: 98%;
+          object-fit: fill;border-radius: 5px;">
+        </div>
+      </div> -->
+
+      <div class="container-upload">
+        <div class="webcam-box text-center">
+          <webcam [height]="240" [width]="240" [trigger]="triggerObservable" (imageCapture)="handleImage($event)"
+            *ngIf="showWebcam" [allowCameraSwitch]="allowCameraSwitch" [videoOptions]="videoOptions" [imageQuality]="0.5"
+            (initError)="handleInitError($event)"></webcam>
+          <br>
+          <button class="actionBtn btn btn-primary" [disabled]="startUpload" (click)="triggerSnapshot();">
+            <span *ngIf="!startUpload">Take A Snapshot</span>
+            <span *ngIf="startUpload">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path
+                  d="M304 48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zm0 416a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM48 304a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm464-48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM142.9 437A48 48 0 1 0 75 369.1 48 48 0 1 0 142.9 437zm0-294.2A48 48 0 1 0 75 75a48 48 0 1 0 67.9 67.9zM369.1 437A48 48 0 1 0 437 369.1 48 48 0 1 0 369.1 437z" />
+              </svg>
+            </span>
+          </button>
+        </div>
+        <div class="snapshot" *ngIf="webcamImage" style="max-width: 300px;min-width: 150px;
+        height: 200px;
+        overflow: hidden;
+        border-radius: 5px;
+        box-shadow: 0px 0px 1px 1px #001828;display: flex; align-items: center;justify-content: center;">
+          <img [src]="uploadedImage" alt="img" class="img-fluid" style="width: 98%;height: 98%;
+          object-fit: fill;border-radius: 5px;">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary me-2"
+      (click)="modal.close('Close click');form.reset();">Close</button>
+    <button type="button" class="btn btn-success" (click)="addVisit(form.value)"
+      [disabled]="form.invalid || !uploadedImage ||startAdding">
+      <span *ngIf="!startAdding">Add</span>
+      <span *ngIf="startAdding">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <path
+            d="M304 48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zm0 416a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM48 304a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm464-48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM142.9 437A48 48 0 1 0 75 369.1 48 48 0 1 0 142.9 437zm0-294.2A48 48 0 1 0 75 75a48 48 0 1 0 67.9 67.9zM369.1 437A48 48 0 1 0 437 369.1 48 48 0 1 0 369.1 437z" />
+        </svg>
+      </span>
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #imgModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Visit # {{(selectedItem?.date | date:'dd-MM-YYYY') +' - '+selectedItem?.time}}
+    </h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <img src="{{selectedItem?.image}}" alt="visit image" style="width: 100%;height: 74vh;object-fit: fill;">
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Close</button>
+  </div>
+</ng-template>

@@ -1,0 +1,123 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+@import '~leaflet/dist/leaflet.css';
+
+
+* {
+  margin: 0px;
+  padding: 0px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+*:not(i) {
+  font-family: "Inter", sans-serif !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #001828;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #001828;
+}
+
+.backBtn {
+  position: absolute;
+  left: 80px;
+  top: 40px;
+  z-index: 1000;
+}
+
+.table-box {
+  max-height: 660px;
+}
+
+.table-box table thead tr {
+  position: sticky;
+  top: 0;
+}
+
+.table-box table tbody tr {
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.table-box table tbody tr:hover * {
+  background: #ffecd2 !important;
+}
+
+
+@media (max-width: 768px) {
+  .backBtn {
+    left: 60px;
+    top: 50px;
+  }
+}
+
+@media (max-width: 575px) {
+
+  .backBtn {
+    left: 10px;
+    top: 10px;
+  }
+
+  ::ng-deep .ngb-dp-months {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+  }
+
+  .ngb-dp-months {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: stretch;
+  }
+
+
+}
+
+.dp-hidden {
+  width: 0;
+  margin: 0;
+  border: none;
+  padding: 0;
+}
+
+.custom-day {
+  text-align: center;
+  padding: 0.185rem 0.25rem;
+  display: inline-block;
+  height: 2rem;
+  width: 2rem;
+}
+
+.custom-day.focused {
+  background-color: #e6e6e6;
+}
+
+.custom-day.range,
+.custom-day:hover {
+  background-color: rgb(2, 117, 216);
+  color: white;
+}
+
+.custom-day.faded {
+  background-color: rgba(2, 117, 216, 0.5);
+}
