@@ -277,6 +277,7 @@ export class VisitsComponent {
   }
 
   getLocation() {
+    this.getLocation2();
     navigator.geolocation.getCurrentPosition((position) => {
       this.latitude = position.coords.latitude;
       this.longitude = position.coords.longitude;
@@ -342,12 +343,22 @@ export class VisitsComponent {
     this.apiService.exportJsonToExcel(edata, "visits_details_" + dateNow);
   }
 
-  // // Create a reference to the file to delete
-  // const desertRef = ref(storage, 'images/desert.jpg');
-  // // Delete the file
-  // deleteObject(desertRef).then(() => {
-  //   // File deleted successfully
-  // }).catch ((error) => {
-  //   // Uh-oh, an error occurred!
-  // });
+  getLocation2() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+      }, (error) => {
+        Swal.fire({ title: 'location is not enabled. Please enable to use this feature', icon: 'error' })
+        setTimeout(() => {
+          this.modalService.dismissAll()
+        }, 4000);
+      })
+    } else {
+      Swal.fire({ title: 'location is not supported by this device', icon: 'error' })
+      setTimeout(() => {
+        this.modalService.dismissAll()
+      }, 4000);
+
+    }
+  }
+
 }
