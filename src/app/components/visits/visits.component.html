@@ -80,49 +80,11 @@
           placeholder="Visit Description" ngModel required></textarea>
       </div>
 
-      <!-- <div class="container-upload">
-        <div class="upload-box position-relative">
-          <div class="content position-relative">
-            <div class="upload-icon">
-              <img class=""
-                src="https://res.cloudinary.com/www-santhoshthomas-xyz/image/upload/v1620293451/RapTor/folder_1_ipacc2.png"
-                alt="">
-            </div>
-
-            <h5 class="text">Drag and Drop Your Files Here</h5>
-            <p>Or</p>
-
-            <div class="upload-btn-wrapper">
-              <button class="btn" [disabled]="startUpload">
-                <span *ngIf="!startUpload">Upload</span>
-                <span *ngIf="startUpload">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                    <path
-                      d="M304 48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zm0 416a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM48 304a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm464-48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM142.9 437A48 48 0 1 0 75 369.1 48 48 0 1 0 142.9 437zm0-294.2A48 48 0 1 0 75 75a48 48 0 1 0 67.9 67.9zM369.1 437A48 48 0 1 0 437 369.1 48 48 0 1 0 369.1 437z" />
-                  </svg>
-                </span>
-              </button>
-            </div>
-          </div>
-
-          <input id="fileUpload" type="file" #upload (input)="uploadFile(upload)" [disabled]="startUpload">
-
-        </div>
-        <div class="preview-box" *ngIf="uploadedImage" style="    max-width: 300px;
-        height: 200px;
-        overflow: hidden;
-        border-radius: 5px;
-        box-shadow: 0px 0px 1px 1px #001828;display: flex; align-items: center;justify-content: center;">
-          <img src="{{uploadedImage}}" alt="img" class="img-fluid" style="width: 98%;height: 98%;
-          object-fit: fill;border-radius: 5px;">
-        </div>
-      </div> -->
-
       <div class="container-upload">
         <div class="webcam-box text-center">
           <webcam [height]="240" [width]="240" [trigger]="triggerObservable" (imageCapture)="handleImage($event)"
-            *ngIf="showWebcam" [allowCameraSwitch]="allowCameraSwitch" [videoOptions]="videoOptions" [imageQuality]="0.5"
-            (initError)="handleInitError($event)"></webcam>
+            *ngIf="showWebcam" [allowCameraSwitch]="allowCameraSwitch" [videoOptions]="videoOptions"
+            [imageQuality]="0.5" (initError)="handleInitError($event)"></webcam>
           <br>
           <button class="actionBtn btn btn-primary" [disabled]="startUpload" (click)="triggerSnapshot();">
             <span *ngIf="!startUpload">Take A Snapshot</span>
@@ -146,8 +108,8 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-secondary me-2"
-      (click)="modal.close('Close click');form.reset();">Close</button>
+    <button type="button" class="btn btn-secondary me-2" (click)="modal.close('Close click');form.reset();"
+      [disabled]="startAdding">Close</button>
     <button type="button" class="btn btn-success" (click)="addVisit(form.value)"
       [disabled]="form.invalid || !uploadedImage ||startAdding">
       <span *ngIf="!startAdding">Add</span>

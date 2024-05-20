@@ -111,7 +111,7 @@ export class VisitsComponent {
   }
 
   getDateTime() {
-    this.date = new Date().toDateString();
+    this.date = this.datepipe.transform(new Date(), 'yyyy-MM-ddTH:m:s.ms')?.toString();
     this.time = new Date().getHours() + ':' + new Date().getMinutes();
   }
 
